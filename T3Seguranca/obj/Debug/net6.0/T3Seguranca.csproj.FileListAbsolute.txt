@@ -1,0 +1,15 @@
+C:\Users\Gabriel_Stundner\source\repos\GITHUB\T3Seguranca\T3Seguranca\bin\Debug\net6.0\T3Seguranca.exe
+C:\Users\Gabriel_Stundner\source\repos\GITHUB\T3Seguranca\T3Seguranca\bin\Debug\net6.0\T3Seguranca.deps.json
+C:\Users\Gabriel_Stundner\source\repos\GITHUB\T3Seguranca\T3Seguranca\bin\Debug\net6.0\T3Seguranca.runtimeconfig.json
+C:\Users\Gabriel_Stundner\source\repos\GITHUB\T3Seguranca\T3Seguranca\bin\Debug\net6.0\T3Seguranca.dll
+C:\Users\Gabriel_Stundner\source\repos\GITHUB\T3Seguranca\T3Seguranca\bin\Debug\net6.0\T3Seguranca.pdb
+C:\Users\Gabriel_Stundner\source\repos\GITHUB\T3Seguranca\T3Seguranca\obj\Debug\net6.0\T3Seguranca.csproj.AssemblyReference.cache
+C:\Users\Gabriel_Stundner\source\repos\GITHUB\T3Seguranca\T3Seguranca\obj\Debug\net6.0\T3Seguranca.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Gabriel_Stundner\source\repos\GITHUB\T3Seguranca\T3Seguranca\obj\Debug\net6.0\T3Seguranca.AssemblyInfoInputs.cache
+C:\Users\Gabriel_Stundner\source\repos\GITHUB\T3Seguranca\T3Seguranca\obj\Debug\net6.0\T3Seguranca.AssemblyInfo.cs
+C:\Users\Gabriel_Stundner\source\repos\GITHUB\T3Seguranca\T3Seguranca\obj\Debug\net6.0\T3Seguranca.csproj.CoreCompileInputs.cache
+C:\Users\Gabriel_Stundner\source\repos\GITHUB\T3Seguranca\T3Seguranca\obj\Debug\net6.0\T3Seguranca.dll
+C:\Users\Gabriel_Stundner\source\repos\GITHUB\T3Seguranca\T3Seguranca\obj\Debug\net6.0\refint\T3Seguranca.dll
+C:\Users\Gabriel_Stundner\source\repos\GITHUB\T3Seguranca\T3Seguranca\obj\Debug\net6.0\T3Seguranca.pdb
+C:\Users\Gabriel_Stundner\source\repos\GITHUB\T3Seguranca\T3Seguranca\obj\Debug\net6.0\T3Seguranca.genruntimeconfig.cache
+C:\Users\Gabriel_Stundner\source\repos\GITHUB\T3Seguranca\T3Seguranca\obj\Debug\net6.0\ref\T3Seguranca.dll
