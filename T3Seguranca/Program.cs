@@ -6,6 +6,8 @@ using System.Numerics;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using static System.Net.Mime.MediaTypeNames;
+using System.Text.RegularExpressions;
 
 namespace T3Seguranca {
     public class Program {
@@ -149,14 +151,36 @@ namespace T3Seguranca {
                 throw new ArgumentException("Invalid hexadecimal string: Length must be even. " + value);
             }
 
-            int length = value.Length;
-            byte[] bytes = new byte[length/2];
-            for(int i = 0; i < length; i+=2)
+            // remove expaços do texto
+            string cleanedText = value;
+
+            int length = cleanedText.Length;
+            byte[] bytes = new byte[length / 2];
+
+            for (int i = 0; i < length; i+=2)
             {
-                bytes[i/2] = Convert.ToByte(value.Substring(i,2),16);
+                bytes[i/2] = Convert.ToByte(cleanedText.Substring(i,2),16);
             }
             return bytes;
         }
+
+        public static byte[] ConvertStringToByteArrayEncrypt(String value)
+        {
+            if (value.Length % 2 != 0)
+            {
+                throw new ArgumentException("Invalid hexadecimal string: Length must be even. " + value);
+            }
+
+            char[] charArray = value.ToCharArray();
+
+            byte[] byteArray = new byte[charArray.Length];
+            for (int i = 0; i < charArray.Length; i++)
+            {
+                byteArray[i] = (byte)charArray[i];
+            }
+            return byteArray;
+        }
+
 
         public static BigInteger ConvertHexToBigInteger(string hexString)
         {
@@ -244,15 +268,18 @@ namespace T3Seguranca {
 
         public static string EncryptText(string msg, string key)
         {
-            byte[] plaintext = ConvertStringToByteArray(msg);
+            Console.WriteLine(msg.Length);
+            for (;msg.Length < 108;)
+            {
+                msg = "00" + msg;
+            }
+            byte[] plaintext = ConvertStringToByteArrayEncrypt(msg);
             byte[] keyBytes = ConvertStringToByteArray(key);
             using (Aes aes = Aes.Create())
             {
                 aes.Key = keyBytes;
                 byte[] iv = GenerateIV();
                 Console.WriteLine("IV gerado: " + ConvertByteToString(iv));
-                plaintext.Concat(iv);
-                Console.WriteLine("Plaintext com o IV concatenado: " + plaintext);
                 aes.Mode = CipherMode.CBC;
                 aes.Padding = PaddingMode.PKCS7;
 
@@ -267,9 +294,20 @@ namespace T3Seguranca {
                     }
 
                     byte[] encryptedBytes = memoryStream.ToArray();
-                    return ByteArrayToString(encryptedBytes);
+                    return ByteArrayToString(iv) + ByteArrayToString(encryptedBytes);
                 }
             }
+        }
+
+        public static string ConvertStringToHex(string text)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in text)
+            {
+                sb.Append(((int)c).ToString("X2"));
+            }
+
+            return sb.ToString();
         }
 
         static byte[] GenerateIV()
