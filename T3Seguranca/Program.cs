@@ -83,6 +83,9 @@ namespace T3Seguranca {
 
         }
 
+        /**
+         * Método para geração de um valor primo
+         */
         public static BigInteger GeneratePrime(int digits)
         {
             BigInteger minValue = (BigInteger)Math.Pow(10, digits - 1);
@@ -90,11 +93,9 @@ namespace T3Seguranca {
 
             Random rand = new Random();
             BigInteger number = GenerateRandomBigInteger(minValue,maxValue,rand);
-            //Console.WriteLine("Valor gerado: " + number.ToString());
             while (!IsPrime(number))
             {
                 number = GenerateRandomBigInteger(minValue, maxValue, rand);
-                //Console.WriteLine($"Gerando outro valor biginteger: " + number.ToString());
             }
             return number;
         }
