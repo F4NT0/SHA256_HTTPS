@@ -18,8 +18,7 @@ namespace T3Seguranca {
             //Console.WriteLine("Valor primo gerado: " + a.ToString());
 
             // Valor gerado: 302169981172443897262726089341
-            //BigInteger a = BigInteger.Parse("302169981172443897262726089341");
-            BigInteger a = BigInteger.Parse("332201154371599461561800595396");
+            BigInteger a = BigInteger.Parse("302169981172443897262726089341");
             Console.WriteLine("Valor primo gerado: " + a.ToString());
 
             // Valores de p e g passados pelo desafio (tive que colocar um zero para não dar valor de ponto negativo)
@@ -35,12 +34,9 @@ namespace T3Seguranca {
             Console.WriteLine("\nA Em Hexadecimal para o professor: " + ConvertToHex(A).Substring(1));
 
             // Valores recebidos pelo professor
-            //String b = "6C7204F6E00ACEC265BF290F04B636A042A42A4274B066EFC8D50E72A957792BF49FD43A71B426C7CF7B6F5D144ECDF28F917154DF0BABEA437011BE4BD8FB62F940AB576140CD5675F93435CA5A8BCF1B38FE7B3942E8A8D8B9B6155727C60E034F26537BD3DE31BDE997D369032C3DD115ACB03A896C945B399A44F5517D8B";
-            String b = "0090CB4B809291A9A9358DE46CA24D67836229CE437EDFE131514D02B6ECA8E7785DFB5B0BCB65F255259AFE65E314F0854F3A00C940249AA7D1CD73637722C3CF789948736CA25E2B57B8157693CBD01D77C70FBA179FAAC5147CD6D7CF37A5548B247D12172A73E95DFB8E61AEA8BBC35D6761A9300D3AC55EE58706B2ADEAC8";
-            //String msg = "830C77BD1E8432F48D7C29DA481EAD6DF4CEFEEF00D3AC15364472DE34D370A69C61B3BD1DF5AEE55783E2075486877636A43B824D66938D1785A54AAAA47EB35B96462D82B1501A78F24BBC5F5B5BF11229721113EC19CDA9402E4EA3A1D8AEB4B0A931F6AF9923F8D4AE7C6E92BB17";
-            String msg = "2522592456943A9A74F0356395AF1C2CEF0936DCE855427110149B81DA044D215CDBB78D2840EDF152E61F3AC8A513126BA2C0E37CFCF580A0CAC638D8B5EB0BF5367A1558CCE5A46A2E13C0C42AF45E9872FF4C8B5A0E4A2B85CB4BD5F44064B3073933B29829FB5BB03CF57467DD2A";
-            //String iv = "830C77BD1E8432F48D7C29DA481EAD6D";
-            String iv = "2522592456943A9A74F0356395AF1C2C";
+            String b = "6C7204F6E00ACEC265BF290F04B636A042A42A4274B066EFC8D50E72A957792BF49FD43A71B426C7CF7B6F5D144ECDF28F917154DF0BABEA437011BE4BD8FB62F940AB576140CD5675F93435CA5A8BCF1B38FE7B3942E8A8D8B9B6155727C60E034F26537BD3DE31BDE997D369032C3DD115ACB03A896C945B399A44F5517D8B";
+            String msg = "508FAF6C53475545EC640D73F077839397A214E6E16754814FB6E70185A2BB01B47F893F36FA76F9343E7B005230FEB46ADC668C2719B9A0B1AB6E5BCD20F0AB23108901BD4A023DF938A5274F867538337EF9A7FB1C77087B354548088B42FE6ED770902203D0B7A4BF3F7E5F8B5793";
+            String iv = "508FAF6C53475545EC640D73F0778393";
             Console.WriteLine("\nValor de B enviado pelo professor: " + b.ToString());
             Console.WriteLine("\nMensagem enviada pelo professor: " +  msg.ToString());
             Console.WriteLine("\nIV da mensagem do professor: " + iv.ToString());
@@ -53,8 +49,7 @@ namespace T3Seguranca {
             String vHexa = ConvertToHex(v);
             Console.WriteLine($"\nValor de V em Hexadecimal: {vHexa}");
 
-            // Calcular o Hash256
-            //string S = CalculateSHA256(vHexa);
+            // Calcular o Hash SHA256
             byte[] S = CalculateSHA256(v);
             byte[] key = new byte[16];
             Array.Copy(S, key, 16);
@@ -84,7 +79,7 @@ namespace T3Seguranca {
         }
 
         /**
-         * Método para geração de um valor primo
+         * Método para geração de um valor primo para usarmos no programa
          */
         public static BigInteger GeneratePrime(int digits)
         {
@@ -100,6 +95,10 @@ namespace T3Seguranca {
             return number;
         }
 
+        /**
+         * Método para verificar se o valor é primo ou não
+         * Ele é muito lento porque vai verificando cada valor até o biginteger original
+         */
         private static bool IsPrime(BigInteger number)
         {
            if(number < 2)
@@ -124,6 +123,9 @@ namespace T3Seguranca {
             return true;
         }
 
+        /**
+         * Método para gerar um biginteger aleatório para uso inicial
+         */
         private static BigInteger GenerateRandomBigInteger(BigInteger minValue, BigInteger maxValue, Random random)
         {
             int maxBytes = (int)Math.Ceiling(BigInteger.Log(maxValue, 256));
@@ -135,16 +137,28 @@ namespace T3Seguranca {
             return BigInteger.Remainder(result, maxValue - minValue + 1) + minValue;
         }
 
+        /**
+         * Método para converter Biginteger em Hexadecimal
+         */
         public static string ConvertToHex(BigInteger number)
         {
             return number.ToString("X");
         }
 
+        /**
+         * Método para converter Byte array para String
+         */
         public static string ConvertByteToString(byte[] value)
         {
             String exit = BitConverter.ToString(value).Replace("-","");
             return exit;
         }
+
+        /**
+         * Método para converter String para byte array na Descriptografia
+         * Foi preciso fazer separados devido a um erro no código C# devido ao tamanho máximo
+         * da biblioteca de conversão em byte[]
+         */
         public static byte[] ConvertStringToByteArray(String value)
         {
             if (value.Length % 2 != 0)
@@ -152,7 +166,6 @@ namespace T3Seguranca {
                 throw new ArgumentException("Invalid hexadecimal string: Length must be even. " + value);
             }
 
-            // remove expaços do texto
             string cleanedText = value;
 
             int length = cleanedText.Length;
@@ -165,6 +178,9 @@ namespace T3Seguranca {
             return bytes;
         }
 
+        /**
+         * Método para converter String em um byte Array no momento da encriptação da mensagem
+         */
         public static byte[] ConvertStringToByteArrayEncrypt(String value)
         {
             if (value.Length % 2 != 0)
@@ -183,12 +199,18 @@ namespace T3Seguranca {
         }
 
 
+        /**
+         * Método para converter Hexadecimal para BigInteger
+         */
         public static BigInteger ConvertHexToBigInteger(string hexString)
         {
             BigInteger value = BigInteger.Parse(hexString, NumberStyles.HexNumber);
             return value;
         }
 
+        /**
+         * Método para converter String para BigInteger
+         */
         public static BigInteger ConvertStringToBigInteger(string numberString)
         {
             BigInteger result;
@@ -203,6 +225,11 @@ namespace T3Seguranca {
             }
         }
 
+        /**
+         * Método para calcular o módulo (G^a mod p) e (B^a mod p) 
+         * para determinar a chave pública A para o professor e determinar o 
+         * valor V para determinar o hash SHA256 para determinar a chave
+         */
         public static BigInteger CalculateModulus(String g, BigInteger a, String p)
         {
             BigInteger modulus = ConvertHexToBigInteger(p);
@@ -213,6 +240,10 @@ namespace T3Seguranca {
             return calc;
         }
 
+        /**
+         * Método para calcular o SHA256 a partir de um biginteger sendo ele o V
+         * calculado, é feito uma quebra em byte verificando tamanho 256
+         */
         public static byte[] CalculateSHA256(BigInteger value)
         {
             using (SHA256 sha256 = SHA256.Create())
@@ -236,6 +267,10 @@ namespace T3Seguranca {
             }
         }
 
+        /**
+         * Método para descriptografar uma mensagem de texto criptografado, utilizado o padding PKCS7
+         * Teve alguns problemas na conversão de byte, mas com a biblioteca AES do C# achei uma solução
+         */
         public static string DecryptText(string msg_padded, string key, string iv)
         {
             byte[] ciphertext = ConvertStringToByteArray(msg_padded);
@@ -267,9 +302,12 @@ namespace T3Seguranca {
             }
         }
 
+        /**
+         * Método de encriptografia do texto reverso (pequeno problema no padding causando
+         * um retorno além devido ao tamanho do bloco do texto
+         */
         public static string EncryptText(string msg, string key)
         {
-            Console.WriteLine(msg.Length);
             for (;msg.Length < 108;)
             {
                 msg = "00" + msg;
@@ -300,6 +338,10 @@ namespace T3Seguranca {
             }
         }
 
+
+        /**
+         * Conversor de String para hexadecimal
+         */
         public static string ConvertStringToHex(string text)
         {
             StringBuilder sb = new StringBuilder();
@@ -311,6 +353,9 @@ namespace T3Seguranca {
             return sb.ToString();
         }
 
+        /**
+         * Gerador de um IV aleatório para a mensagem de retorno ao professor
+         */
         static byte[] GenerateIV()
         {
             using (Aes aes = Aes.Create())
@@ -320,6 +365,9 @@ namespace T3Seguranca {
             }
         }
 
+        /**
+         * Conversor de Byte Array para String
+         */
         static string ByteArrayToString(byte[] bytes)
         {
             StringBuilder sb = new StringBuilder(bytes.Length * 2);
