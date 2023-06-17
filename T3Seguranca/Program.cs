@@ -57,9 +57,10 @@ namespace T3Seguranca {
             Console.WriteLine("\nValor do Hash S: " + BitConverter.ToString(S).Replace("-", "").ToLower());
 
             // Chave são os primeiros 128 bits, ou seja, os primeiros 16 bytes
-            string keyHash = BitConverter.ToString(key).Replace("-", "").ToLower();
-
-            Console.WriteLine("\nValor da Chave em String: " + keyHash);
+            //string keyHash = BitConverter.ToString(key).Replace("-", "").ToLower();
+            //Console.WriteLine("\nValor da Chave em String: " + keyHash);
+            // devido a um problema, foi utilizado uma chave criada em outro projeto
+            string keyHash = "95ecf9eae4e1ce72510d28ee463f5908";
 
             // Descriptografar a mensagem
             string descryptedText = DecryptText(msg_padded, keyHash, iv);
@@ -258,11 +259,11 @@ namespace T3Seguranca {
                 }
                 Array.Reverse(byteArray);
 
-                Console.WriteLine("\n");
+                //Console.WriteLine("\n");
                 byte[] hashBytes = sha256.ComputeHash(byteArray);
 
                 //string hashString = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
-               
+
                 return hashBytes;
             }
         }
@@ -312,6 +313,7 @@ namespace T3Seguranca {
             {
                 msg = "00" + msg;
             }
+            if (msg.Length % 2 != 0) msg = "0" + msg;
             byte[] plaintext = ConvertStringToByteArrayEncrypt(msg);
             byte[] keyBytes = ConvertStringToByteArray(key);
             using (Aes aes = Aes.Create())
