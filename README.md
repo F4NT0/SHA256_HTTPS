@@ -1,5 +1,12 @@
 # T3 de segurança
 
+![Static Badge](https://img.shields.io/badge/Language-C%23-purple)
+![Static Badge](https://img.shields.io/badge/Framework-.NET%20Core-blue)
+![Static Badge](https://img.shields.io/badge/.NET%20Version-6.0-lightblue)
+![Static Badge](https://img.shields.io/badge/University-PUCRS-orange)
+![Static Badge](https://img.shields.io/badge/Year-2023-green)
+
+
 ## $$\sf Para \space rodar \space o \space projeto$$
 
 1. Baixe o [.NET SDK 6](https://dotnet.microsoft.com/en-us/download)
