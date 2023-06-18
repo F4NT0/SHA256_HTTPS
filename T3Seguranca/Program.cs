@@ -57,10 +57,8 @@ namespace T3Seguranca {
             Console.WriteLine("\nValor do Hash S: " + BitConverter.ToString(S).Replace("-", "").ToLower());
 
             // Chave são os primeiros 128 bits, ou seja, os primeiros 16 bytes
-            //string keyHash = BitConverter.ToString(key).Replace("-", "").ToLower();
-            //Console.WriteLine("\nValor da Chave em String: " + keyHash);
-            // devido a um problema, foi utilizado uma chave criada em outro projeto
-            string keyHash = "95ecf9eae4e1ce72510d28ee463f5908";
+            string keyHash = BitConverter.ToString(key).Replace("-", "").ToLower();
+            Console.WriteLine("\nValor da Chave em String: " + keyHash);
 
             // Descriptografar a mensagem
             string descryptedText = DecryptText(msg_padded, keyHash, iv);
@@ -76,6 +74,9 @@ namespace T3Seguranca {
             string encriptedText = EncryptText(textReverse,keyHash);
             Console.WriteLine("\nTexto invertido criptografado: " + encriptedText);
             
+            // Texto sem IV
+            string encriptedTextNoIV = encriptedText.Substring(32);
+            Console.WriteLine("\nTexto invertido criptografado sem IV: " + encriptedTextNoIV);
 
         }
 
@@ -245,24 +246,21 @@ namespace T3Seguranca {
          * Método para calcular o SHA256 a partir de um biginteger sendo ele o V
          * calculado, é feito uma quebra em byte verificando tamanho 256
          */
+
         public static byte[] CalculateSHA256(BigInteger value)
         {
             using (SHA256 sha256 = SHA256.Create())
             {
+                byte[] valueBytes = value.ToByteArray();
 
-                int byteSize = (int)Math.Ceiling(BigInteger.Log(value, 256));
-                byte[] byteArray = new byte[byteSize];
-                for(int i = 0; i < byteSize; i++)
-                {
-                    byteArray[i] = (byte)(value % 256);
-                    value /= 256;
-                }
-                Array.Reverse(byteArray);
+                // Remove leading zero byte if present
+                if (valueBytes.Length > 1 && valueBytes[0] == 0)
+                    valueBytes = valueBytes.Skip(1).ToArray();
 
-                //Console.WriteLine("\n");
-                byte[] hashBytes = sha256.ComputeHash(byteArray);
+                // Reverse the byte order to little-endian
+                Array.Reverse(valueBytes);
 
-                //string hashString = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
+                byte[] hashBytes = sha256.ComputeHash(valueBytes);
 
                 return hashBytes;
             }
@@ -320,7 +318,7 @@ namespace T3Seguranca {
             {
                 aes.Key = keyBytes;
                 byte[] iv = GenerateIV();
-                Console.WriteLine("IV gerado: " + ConvertByteToString(iv));
+                Console.WriteLine("\nIV gerado: " + ConvertByteToString(iv));
                 aes.Mode = CipherMode.CBC;
                 aes.Padding = PaddingMode.PKCS7;
 
