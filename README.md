@@ -2,7 +2,7 @@
 
 ## $$\sf Para \space rodar \space o \space projeto$$
 
-1. Baixe o .NET SDK
+1. Baixe o [.NET SDK 6](https://dotnet.microsoft.com/en-us/download)
 2. Rode o seguinte comando dentro da pasta T3Seguranca: `dotnet run`
 3. Link para o repositório do projeto: [T3Segurança - F4NT0 Github](https://github.com/F4NT0/T3Seguranca)
 

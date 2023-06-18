@@ -296,8 +296,6 @@ namespace T3Seguranca {
                         }
                     }
                 }
-
-                return plaintext;
             }
         }
 
