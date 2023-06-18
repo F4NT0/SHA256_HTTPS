@@ -13,7 +13,7 @@
 2. Rode o seguinte comando dentro da pasta T3Seguranca: `dotnet run`
 3. Link para o repositório do projeto: [T3Segurança - F4NT0 Github](https://github.com/F4NT0/T3Seguranca)
 
-## $$Resultados$$
+## $$\sf Resultados$$
 
 - Abaixo se encontra os valores que retornaram na compilação do projeto:
 
@@ -75,7 +75,7 @@ Informações entregues ao professor:
 
 
 
-## $$Código$$
+## $$\sf Código$$
 
 ---
 
